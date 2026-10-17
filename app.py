@@ -13,6 +13,15 @@ from typing import Any, Dict, List
 import streamlit as st
 from langchain_core.documents import Document
 
+# Sync Streamlit Community Cloud secrets into os.environ if present
+try:
+    if hasattr(st, "secrets"):
+        for _k, _v in st.secrets.items():
+            if isinstance(_v, str) and _k not in os.environ:
+                os.environ[_k] = _v
+except Exception:
+    pass
+
 from src.config import get_settings
 from src.graph import get_graph
 from src.state import make_initial_state
