@@ -71,21 +71,32 @@ def render_sidebar():
         st.header("⚙️ Configuration")
         settings = get_settings()
 
-        api_key_input = st.text_input(
-            "Groq API Key",
-            value=settings.groq_api_key or os.environ.get("GROQ_API_KEY", ""),
-            type="password",
-            help="Get your free key at https://console.groq.com/keys",
-        )
-        if api_key_input:
-            os.environ["GROQ_API_KEY"] = api_key_input
-            settings.groq_api_key = api_key_input
+        if "default_groq_key" not in st.session_state:
+            st.session_state.default_groq_key = settings.groq_api_key or os.environ.get("GROQ_API_KEY", "")
 
-        if not settings.groq_api_key:
-            st.warning("⚠️ Please provide a `GROQ_API_KEY` to run queries.", icon="⚠️")
-            st.markdown(
-                "[👉 Get a free Groq API key here](https://console.groq.com/keys)"
-            )
+        default_has_key = bool(st.session_state.default_groq_key)
+
+        custom_key_input = st.text_input(
+            "Groq API Key (Optional)",
+            value="",
+            type="password",
+            placeholder="Using default key •••••••• (enter to override)" if default_has_key else "gsk_... (required)",
+            help="Leave blank to use the default server key. Enter your own key to override.",
+        )
+
+        if custom_key_input.strip():
+            active_key = custom_key_input.strip()
+            st.caption("🔑 *Using custom user-provided API key*")
+        elif default_has_key:
+            active_key = st.session_state.default_groq_key
+            st.caption("🟢 *Using default server key (masked)*")
+        else:
+            active_key = ""
+            st.warning("⚠️ No API key detected. Please enter a `GROQ_API_KEY` to run queries.", icon="⚠️")
+            st.markdown("[👉 Get a free Groq API key here](https://console.groq.com/keys)")
+
+        os.environ["GROQ_API_KEY"] = active_key
+        settings.groq_api_key = active_key
 
         st.divider()
         st.subheader("Model Configuration")
