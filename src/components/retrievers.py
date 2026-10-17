@@ -20,7 +20,38 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.retrievers import EnsembleRetriever
+
+try:
+    from langchain.retrievers.ensemble import EnsembleRetriever
+except (ImportError, ModuleNotFoundError):
+    try:
+        from langchain.retrievers import EnsembleRetriever
+    except (ImportError, ModuleNotFoundError):
+        from collections import defaultdict
+        from langchain_core.callbacks import CallbackManagerForRetrieverRun
+
+        class EnsembleRetriever(BaseRetriever):  # type: ignore[no-redef]
+            """Self-contained Reciprocal Rank Fusion Ensemble Retriever fallback."""
+            retrievers: list
+            weights: list
+            c: int = 60
+
+            def _get_relevant_documents(
+                self,
+                query: str,
+                *,
+                run_manager: Optional[CallbackManagerForRetrieverRun] = None,
+            ) -> List[Document]:
+                rrf_score = defaultdict(float)
+                doc_map = {}
+                for retriever, weight in zip(self.retrievers, self.weights):
+                    docs = retriever.invoke(query)
+                    for rank, doc in enumerate(docs):
+                        key = doc.page_content
+                        doc_map[key] = doc
+                        rrf_score[key] += weight * (1.0 / (rank + self.c))
+                sorted_keys = sorted(rrf_score.keys(), key=lambda k: rrf_score[k], reverse=True)
+                return [doc_map[k] for k in sorted_keys]
 
 from src.config import get_settings
 
