@@ -17,8 +17,8 @@ from langchain_core.documents import Document
 try:
     if hasattr(st, "secrets"):
         for _k, _v in st.secrets.items():
-            if isinstance(_v, str) and _k not in os.environ:
-                os.environ[_k] = _v
+            if _k not in os.environ and not isinstance(_v, (dict, list)):
+                os.environ[_k] = str(_v)
 except Exception:
     pass
 
