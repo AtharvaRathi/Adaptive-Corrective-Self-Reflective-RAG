@@ -1,0 +1,92 @@
+[
+  {
+    "id": "doc_001",
+    "source": "transformer_paper.txt",
+    "title": "Attention Is All You Need",
+    "content": "The Transformer model architecture relies entirely on attention mechanisms, dispensing with recurrence and convolutions entirely. The model uses multi-head self-attention to draw global dependencies between input and output. The Transformer allows for significantly more parallelization during training. Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions."
+  },
+  {
+    "id": "doc_002",
+    "source": "transformer_paper.txt",
+    "title": "Scaled Dot-Product Attention",
+    "content": "Attention mechanisms compute a weighted sum of values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key. Scaled dot-product attention divides the dot products by the square root of the key dimension to prevent vanishing gradients in softmax for large dimensions. The formula is: Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) * V."
+  },
+  {
+    "id": "doc_003",
+    "source": "llm_survey.txt",
+    "title": "Large Language Models Overview",
+    "content": "Large Language Models (LLMs) are neural networks trained on massive text corpora using self-supervised learning. Key models include GPT-4, Claude, Gemini, and LLaMA. They exhibit emergent capabilities such as in-context learning, chain-of-thought reasoning, and instruction following. LLMs are pre-trained on next-token prediction and fine-tuned with RLHF (Reinforcement Learning from Human Feedback) to align with human preferences."
+  },
+  {
+    "id": "doc_004",
+    "source": "rag_paper.txt",
+    "title": "Retrieval-Augmented Generation",
+    "content": "RAG (Retrieval-Augmented Generation) combines parametric knowledge stored in LLM weights with non-parametric knowledge from external document stores. A retriever fetches relevant documents given a query, and a generator produces output conditioned on both the query and retrieved context. RAG reduces hallucinations by grounding responses in verifiable external documents and allows knowledge updates without retraining."
+  },
+  {
+    "id": "doc_005",
+    "source": "rag_paper.txt",
+    "title": "Corrective RAG",
+    "content": "Corrective RAG (CRAG) improves upon standard RAG by incorporating a document relevance evaluator. When retrieved documents are judged to be irrelevant or ambiguous, CRAG triggers a web search to supplement or replace the vector store results. A query reformulator generates alternative queries to improve retrieval quality in subsequent iterations. This creates a self-correcting retrieval loop."
+  },
+  {
+    "id": "doc_006",
+    "source": "self_rag_paper.txt",
+    "title": "Self-RAG: Self-Reflective Retrieval",
+    "content": "Self-RAG trains language models to reflect on their own outputs using special reflection tokens called critique tokens. The model learns to decide when to retrieve (IsRel), whether retrieved passages are relevant (IsSup), and whether generated output is useful (IsUse). Self-RAG achieves better factuality than standard RAG by enabling the model to adaptively retrieve information on demand and critically evaluate its own generations."
+  },
+  {
+    "id": "doc_007",
+    "source": "bm25_retrieval.txt",
+    "title": "BM25 Sparse Retrieval Algorithm",
+    "content": "BM25 (Best Match 25) is a probabilistic ranking function used in information retrieval. It extends TF-IDF by incorporating document length normalization and term frequency saturation. BM25 scores documents based on the frequency of query terms appearing in the document, penalizing very long documents to avoid bias. BM25 is particularly effective for exact keyword matching and is widely used in search engines. Parameters k1 and b control term frequency saturation and length normalization respectively."
+  },
+  {
+    "id": "doc_008",
+    "source": "faiss_docs.txt",
+    "title": "FAISS Vector Similarity Search",
+    "content": "FAISS (Facebook AI Similarity Search) is a library for efficient similarity search and clustering of dense vectors. It supports exact and approximate nearest neighbor search using techniques like IVF (Inverted File Index) and HNSW (Hierarchical Navigable Small World graphs). FAISS is optimized for GPU acceleration and can handle billions of vectors. It is commonly used to build vector databases for semantic search in RAG systems using OpenAI or other embedding models."
+  },
+  {
+    "id": "doc_009",
+    "source": "hybrid_search.txt",
+    "title": "Hybrid Search: Dense + Sparse Fusion",
+    "content": "Hybrid search combines dense vector retrieval (semantic similarity) with sparse keyword retrieval (lexical matching) to leverage the strengths of both approaches. Dense retrieval captures semantic meaning and handles paraphrases well. Sparse retrieval excels at exact term matching and handles out-of-vocabulary terms. Reciprocal Rank Fusion (RRF) or weighted score interpolation can combine ranked lists from both retrievers. EnsembleRetriever in LangChain implements this pattern."
+  },
+  {
+    "id": "doc_010",
+    "source": "langgraph_docs.txt",
+    "title": "LangGraph StateGraph",
+    "content": "LangGraph is a library for building stateful, multi-actor applications with LLMs. It uses a StateGraph to define nodes (functions) and edges (transitions) in a directed graph. State is a TypedDict or Pydantic model shared across all nodes. Conditional edges allow dynamic routing based on node outputs. LangGraph supports cycles (loops), making it ideal for agentic workflows like CRAG and Self-RAG that require iterative refinement."
+  },
+  {
+    "id": "doc_011",
+    "source": "hallucination_detection.txt",
+    "title": "Hallucination in Language Models",
+    "content": "Hallucination in LLMs refers to the generation of factually incorrect or fabricated information that appears plausible. Intrinsic hallucinations contradict the source context, while extrinsic hallucinations introduce information absent from the context. Mitigation strategies include retrieval augmentation, chain-of-thought prompting, and post-generation verification. Faithfulness metrics like RAGAS evaluate whether generated text is supported by retrieved passages."
+  },
+  {
+    "id": "doc_012",
+    "source": "embeddings_guide.txt",
+    "title": "OpenAI Text Embeddings",
+    "content": "OpenAI's text embedding models convert text into high-dimensional numerical vectors that capture semantic meaning. text-embedding-3-small produces 1536-dimensional vectors and is cost-efficient. text-embedding-3-large produces 3072-dimensional vectors with higher accuracy. Embeddings are used for semantic search, clustering, classification, and anomaly detection. Cosine similarity measures the angle between two embedding vectors to determine semantic relatedness."
+  },
+  {
+    "id": "doc_013",
+    "source": "climate_report.txt",
+    "title": "Climate Change and Global Warming",
+    "content": "Global average temperatures have risen approximately 1.1°C above pre-industrial levels due to human greenhouse gas emissions. The IPCC Sixth Assessment Report warns that limiting warming to 1.5°C requires rapid, deep emission reductions across all sectors by 2030. Key sources of emissions include fossil fuel combustion (75%), agriculture (10-12%), and deforestation (10%). Carbon capture technologies and renewable energy transitions are critical mitigation pathways."
+  },
+  {
+    "id": "doc_014",
+    "source": "ml_training.txt",
+    "title": "Training Large Neural Networks",
+    "content": "Training large language models requires careful management of compute, data, and optimization. Gradient descent with Adam optimizer is standard. Techniques like gradient clipping prevent exploding gradients. Mixed-precision training (FP16/BF16) reduces memory usage. Distributed training across multiple GPUs uses data parallelism and model parallelism. Key challenges include training instability, overfitting, catastrophic forgetting, and computational cost scaling with model size."
+  },
+  {
+    "id": "doc_015",
+    "source": "prompt_engineering.txt",
+    "title": "Prompt Engineering Best Practices",
+    "content": "Prompt engineering involves crafting input instructions to guide LLM outputs. Few-shot prompting provides examples within the prompt to demonstrate desired behavior. Chain-of-thought prompting encourages step-by-step reasoning by adding 'Let's think step by step'. Role prompting assigns a persona to the model. Structured output prompting uses JSON schemas to enforce output format. System prompts in chat models set global context and behavioral constraints."
+  }
+]

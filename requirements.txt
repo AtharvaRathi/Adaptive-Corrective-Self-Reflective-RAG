@@ -1,0 +1,36 @@
+# Core LangChain & LangGraph
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-groq>=0.2.0
+langchain-huggingface>=0.1.0
+
+# Embeddings
+sentence-transformers>=3.0.0
+
+# Vector Store
+faiss-cpu>=1.8.0
+
+# Sparse Retrieval
+rank-bm25>=0.2.2
+
+# Web Search Fallback
+tavily-python>=0.5.0
+duckduckgo-search>=6.0.0
+
+# Data Validation & Settings
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# Environment Management
+python-dotenv>=1.0.0
+
+# Rich Terminal Output
+rich>=13.7.0
+
+# Streamlit Web UI
+streamlit>=1.35.0
+
+# Testing
+pytest>=8.2.0
+pytest-asyncio>=0.23.0
